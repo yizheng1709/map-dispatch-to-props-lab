@@ -24,6 +24,10 @@ export class RestaurantInput extends Component {
   handleOnSubmit = event => {
     event.preventDefault();
     // add missing code
+    console.log(this)
+    const restaurant = {name: this.state.name, location: this.state.location}
+    // debugger
+    this.props.restaurants(restaurant)
   }
 
   render() {
@@ -51,4 +55,20 @@ export class RestaurantInput extends Component {
 
 
 //connect this component by wrapping RestaurantInput below
-export default RestaurantInput
+
+
+//the values of the properties in the return value of the function ARE functions
+// that invoke the dispatch function - we pass in ACTION OBJECTS to dispatch as the argument
+// even if we dont pass mapDispatchToProps, this component will automatically still get access to dispatch
+
+const mapDispatchToProps = dispatch => {
+  console.log("in mapDispatchToProps and >>", dispatch)
+  return {
+    restaurants: (restaurant) => {
+      // debugger
+      dispatch(addRestaurant(restaurant))
+    }
+  }
+}
+
+export default connect(null, mapDispatchToProps)(RestaurantInput)
